@@ -8,10 +8,13 @@
   "license": "ISC",
   "scripts": {
     "clean": "rm dist/bundle.js",
-    "build-dev": "webpack -d --mode development",
-    "build-prod": "webpack -p --mode production"
+    "build-dev": "webpack -d --mode development --watch",
+    "build-prod": "webpack -p --mode production",
+    "start": "nodemon server.js"
   },
   "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
