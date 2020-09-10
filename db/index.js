@@ -1,10 +1,9 @@
-const { Client } = require('pg');
+const { Client } = require("pg");
 
 const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  connectionString:
+    process.env.DATABASE_URL || "postgresql://postgres@:5432/groceries",
+  ssl: process.env.DATABASE_URL ? true : false,
 });
 
 client.connect();
@@ -12,5 +11,5 @@ client.connect();
 module.exports = {
   query: (text, params) => {
     return client.query(text, params);
-  }
-}
+  },
+};
