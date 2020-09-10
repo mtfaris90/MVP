@@ -5,11 +5,11 @@ module.exports = {
     console.log("trigerred models.readList");
     return pool.query("SELECT items FROM lists WHERE owner = $1", [owner]);
   },
-  writeItem: (item, owner) => {
+  writeItem: (item, dept, owner) => {
     console.log("trigerred models.writeItem");
     return pool.query(
       "UPDATE lists SET items = array_append(items, $1) WHERE owner = $2;",
-      [item, owner]
+      [`${item}-${dept}`, owner]
     );
   },
   deleteItem: (item, owner) => {

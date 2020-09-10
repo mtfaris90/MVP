@@ -8,6 +8,7 @@ class App extends React.Component {
       itemForm: "",
       groceryList: [],
       userForm: "",
+      department: "Misc",
     };
     this.handleChange = this.handleChange.bind(this);
     this.postItem = this.postItem.bind(this);
@@ -29,7 +30,13 @@ class App extends React.Component {
     axios(getObj)
       .then((response) => {
         // console.log(response.data);
-        this.setState({ groceryList: response.data });
+        const stringList = response.data;
+        const objList = [];
+        stringList.forEach((string) => {
+          let split = string.split("-");
+          objList.push({ item: split[0], dept: split[1] });
+        });
+        this.setState({ groceryList: objList });
       })
       .catch((err) => {
         console.error(err);
@@ -42,7 +49,7 @@ class App extends React.Component {
     let postObj = {
       method: "post",
       url: `/list/${this.state.userForm}`,
-      data: { item: this.state.itemForm },
+      data: { item: this.state.itemForm, dept: this.state.department },
     };
     axios(postObj)
       .then((response) => {
@@ -52,7 +59,7 @@ class App extends React.Component {
       .catch((err) => {
         console.error(err);
       });
-    this.setState({ itemForm: "" });
+    this.setState({ itemForm: "", department: "Misc" });
     e.preventDefault();
   }
   deleteItem(e) {
@@ -92,6 +99,22 @@ class App extends React.Component {
         <form onSubmit={this.postItem}>
           <label>
             Add To Your List:
+            <select
+              name="department"
+              value={this.state.department}
+              onChange={this.handleChange}
+            >
+              <option value="Misc">Misc</option>
+              <option value="Produce">Produce</option>
+              <option value="Meat">Meat</option>
+              <option value="Beer and Wine">Beer and Wine</option>
+              <option value="Canned Goods">Canned Goods</option>
+              <option value="Dairy">Dairy</option>
+              <option value="Dry Foods">Dry Foods</option>
+              <option value="International">International</option>
+              <option value="Health and Beauty">Health and Beauty</option>
+              <option value="Paper Products">Paper Products</option>
+            </select>
             <input
               type="text"
               name="itemForm"
@@ -108,8 +131,8 @@ class App extends React.Component {
         <ul>
           {this.state.groceryList.map((thing, i) => (
             <li key={i}>
-              {thing}
-              <button name={thing} onClick={this.deleteItem}>
+              {thing.item} ({thing.dept} department)
+              <button name={thing.item} onClick={this.deleteItem}>
                 X
               </button>
             </li>

@@ -3,7 +3,7 @@ const { readList, writeItem, deleteItem, createList } = require("../models");
 module.exports = {
   postItem: (req, res) => {
     console.log("triggered controllers.postItem w/ owner = ", req.params.owner);
-    writeItem(req.body.item, req.params.owner)
+    writeItem(req.body.item, req.body.dept, req.params.owner)
       .then(() => {
         res.sendStatus(201);
       })
