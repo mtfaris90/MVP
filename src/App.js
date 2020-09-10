@@ -9,27 +9,27 @@ class App extends React.Component {
       groceryList: [],
       userForm: "",
       department: "Misc",
+      sorted: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.postItem = this.postItem.bind(this);
     this.getList = this.getList.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.sortItems = this.sortItems.bind(this);
   }
-  // componentDidMount() {
-  //   this.getList();
-  // }
   getList(e) {
     if (e) {
       e.preventDefault();
     }
-    // console.log("triggered getList");
+    setTimeout(() => {
+      this.getList();
+    }, 5000);
     let getObj = {
       method: "get",
       url: `/list/${this.state.userForm}`,
     };
     axios(getObj)
       .then((response) => {
-        // console.log(response.data);
         const stringList = response.data;
         const objList = [];
         stringList.forEach((string) => {
@@ -37,6 +37,9 @@ class App extends React.Component {
           objList.push({ item: split[0], dept: split[1] });
         });
         this.setState({ groceryList: objList });
+        if (this.state.sorted) {
+          this.sortItems();
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -53,7 +56,6 @@ class App extends React.Component {
     };
     axios(postObj)
       .then((response) => {
-        // console.log(response.data);
         this.getList();
       })
       .catch((err) => {
@@ -77,6 +79,15 @@ class App extends React.Component {
       .catch((err) => {
         console.error(err);
       });
+  }
+  sortItems() {
+    const unsortedItems = this.state.groceryList;
+    const sortedItems = unsortedItems.sort((a, b) => {
+      var textA = a.dept;
+      var textB = b.dept;
+      return textA < textB ? -1 : textA > textB ? 1 : 0;
+    });
+    this.setState({ groceryList: sortedItems, sorted: true });
   }
   render() {
     return (
@@ -106,6 +117,7 @@ class App extends React.Component {
             >
               <option value="Misc">Misc</option>
               <option value="Produce">Produce</option>
+              <option value="Bakery">Bakery</option>
               <option value="Meat">Meat</option>
               <option value="Beer and Wine">Beer and Wine</option>
               <option value="Canned Goods">Canned Goods</option>
@@ -128,11 +140,17 @@ class App extends React.Component {
         <button type="button" onClick={this.getList}>
           Refresh
         </button>
+        <button type="button" onClick={this.sortItems}>
+          Sort By Department
+        </button>
         <ul>
           {this.state.groceryList.map((thing, i) => (
             <li key={i}>
-              {thing.item} ({thing.dept} department)
-              <button name={thing.item} onClick={this.deleteItem}>
+              {thing.item} ({thing.dept})
+              <button
+                name={`${thing.item}-${thing.dept}`}
+                onClick={this.deleteItem}
+              >
                 X
               </button>
             </li>
