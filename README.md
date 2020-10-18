@@ -1,6 +1,6 @@
-# mvp
+# Supermarket Schweep
 
-Empty project.
+Your new and improved multi-user grocery list!
 
 ## Building and running on localhost
 
