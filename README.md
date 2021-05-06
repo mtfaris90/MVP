@@ -1,31 +1,30 @@
-# mvp
+# Supermarket Schweep
 
-Empty project.
+Your new and improved multi-user grocery list!
+This app was initially created as a MVP during a 40 hour solo hackathon.
+Initialized with Create React App.
+```
+npx create-react-app
+```
+## Tech Stack
 
-## Building and running on localhost
+* React
+* Node.js
+* PostgreSQL
+* Express.js
+* SCSS
 
-First install dependencies:
+## Getting Started
 
-```sh
+Clone the repo locally.
+Within the project directory, run:
+
+```
 npm install
+npm start
 ```
+In order to run the app in development mode, in a separate terminal tab, run:
 
-To create a production build:
-
-```sh
-npm run build-prod
 ```
-
-To create a development build:
-
-```sh
 npm run build-dev
 ```
-
-## Running
-
-Open the file `dist/index.html` in your browser
-
-## Credits
-
-Made with [createapp.dev](https://createapp.dev/)
