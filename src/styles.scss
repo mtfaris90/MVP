@@ -1,6 +1,19 @@
-$primary-color: white;
+$primary-color: rgb(255, 43, 43);
 $bg: black;
 h1 {
   color: $primary-color;
-  background-color: $bg;
+  background-image: url("https://media.istockphoto.com/photos/shopping-cart-in-supermarket-aisle-with-product-shelves-interior-picture-id1128949343?k=6&m=1128949343&s=612x612&w=0&h=-rfUFsHnGj1ehgV9L7SRwI_VSKGoIEcp67GOfPyqbDg=");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+  text-align: center;
+  font-size: 100px;
+  text-shadow: 2px 2px black;
+  border: solid 2px white;
+  border-radius: 10px;
+  width: 50%;
+  margin: auto;
+}
+html {
+  background-image: linear-gradient(to bottom right, white , lightblue);
 }
